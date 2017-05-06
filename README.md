@@ -8,6 +8,5 @@ Pour l'exécuter sur votre machine :
 
 ```
 sudo dnf install pl
-swipl generation.pl
-gn(X, Y).
+swipl -s generation.prolog -g "gen." -t halt.
 ```
