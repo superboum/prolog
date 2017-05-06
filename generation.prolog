@@ -1,44 +1,53 @@
-article(feminin, cette).
-article(feminin, une).
+article(cette, feminin).
+article(une, feminin).
 
-article(masculin, ce).
-article(masculin, un).
+article(ce, masculin).
+article(un, masculin).
 
-article(neutre, chaque).
+article(chaque, neutre).
 
-mot(feminin, bouteille).
-mot(feminin, robe).
+mot(bouteille, feminin).
+mot(robe, feminin).
 
-mot(masculin, gout).
-mot(masculin, vin).
+mot(gout, masculin).
+mot(vin, masculin).
+mot(millésime, masculin).
 
-adjectif(apres, masculin, beau).
-adjectif(apres, masculin, rond).
-adjectif(apres, masculin, fruité).
+adjectif(beau, masculin, apres).
+adjectif(rond, masculin, apres).
+adjectif(fruité, masculin, apres).
+adjectif(élégant, masculin, apres).
 
-adjectif(apres, neutre, honnête).
-adjectif(apres, neutre, agréable).
-adjectif(apres, neutre, pourpre).
+adjectif(honnête, neutre, apres).
+adjectif(agréable, neutre, apres).
+adjectif(pourpre, neutre, apres).
+adjectif(grandiose, neutre, apres).
 
-verbe(3, est).
-verbe(3, possède).
+adjectif(élégante, feminin, apres).
+adjectif(belle, feminin, apres).
+adjectif(ronde, feminin, apres).
+adjectif(fruitée, feminin, apres).
+
+verbe(possède, 3).
+verbe(distille, 3).
+verbe(a, 3).
 
 syntagme_nominal(X, Y) :-
-  (article(X, A); article(neutre, A)),
-  mot(X, B),
+  (article(A, X); article(A, neutre)),
+  mot(B, X),
   atomic_list_concat([A, B], ' ', Y).
 
 syntagme_nominal(X, Y) :-
-  (article(X, A); article(neutre, A)),
-  mot(X, B),
-  (adjectif(apres, X, C); adjectif(apres, neutre, C)),
+  (article(A, X); article(A, neutre)),
+  mot(B, X),
+  (adjectif(C, X, apres); adjectif(C, neutre, apres)),
   atomic_list_concat([A, B, C], ' ', Y).
 
 syntagme_verbal(_, Y) :-
-  verbe(3, Y).
+  verbe(Y, 3).
 
 syntagme_verbal(X, Y) :-
-  verbe(3, A),
+  verbe(A, 3),
   syntagme_nominal(X, B),
   atomic_list_concat([A, B], ' ', Y).
 
