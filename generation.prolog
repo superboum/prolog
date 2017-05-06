@@ -47,6 +47,11 @@ verbe(a, 3).
 % LOGIQUE
 %%%%%
 
+unique([]).
+unique([H|T]) :-
+  not(member(H,T)),
+  unique(T).
+
 syntagme_nominal(X, [A, B]) :-
   (article(A, X); article(A, neutre)),
   mot(B, X).
@@ -66,7 +71,8 @@ syntagme_verbal(X, [A|B]) :-
 phrase(X) :-
   syntagme_nominal(_, A),
   syntagme_verbal(_, B),
-  append(A, B, X).
+  append(A, B, X),
+  unique(X). % Pose problème avec les déterminants
 
 gen :-
   findall(A, phrase(A), B),
