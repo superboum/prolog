@@ -12,7 +12,7 @@ sell(grimHex, waste, 0.010).
 % ArcCorp157
 sell(arcCorp157, medicalSupplies, 18.05).
 
-journey(Departure, Arrival, Profit) :-
-  buy(Departure, X, C1),
-  sell(Arrival, X, C2),
+journey(Departure, Arrival, Merchandise, Profit) :-
+  buy(Departure, Merchandise, C1),
+  sell(Arrival, Merchandise, C2),
   Profit is C2 - C1.
