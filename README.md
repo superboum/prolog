@@ -20,9 +20,19 @@ swipl -s vivinasse.prolog -g "gen." -t halt.
 Generate sctrading.pl:
 
 ```
-python3 sctradingToProlog.py < sctrading.csv > sctrading.prolog
+cd sc
+python3 sctradingToProlog.py < sctrading.csv > info.pl
 ```
 
+Run an interpreter:
+
 ```
-swipl sc.prolog
+cd sc
+swipl load.pl 
+```
+
+Example:
+
+```prolog
+mostProfitableTwoWayTrip(4,2000,S).
 ```
