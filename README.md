@@ -16,3 +16,13 @@ swipl -s vivinasse.prolog -g "gen." -t halt.
 ## SC
 
 *WIP*
+
+Generate sctrading.pl:
+
+```
+python3 sctradingToProlog.py < sctrading.csv > sctrading.prolog
+```
+
+```
+swipl sc.prolog
+```
