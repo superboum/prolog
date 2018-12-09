@@ -1,4 +1,5 @@
 :- [
-  info,
-  rules
+  facts,
+  world,
+  goals
 ].
