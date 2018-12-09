@@ -2,5 +2,6 @@
   facts,
   world,
   explorer,
-  goals
+  goals,
+  web
 ].
