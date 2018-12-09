@@ -1,8 +1,9 @@
-allsorted(Match, SortPos, SortOrder, Rules, Res) :- 
+allsorted(Match, SortOrder, Rules) :- 
   findall(Match, Rules, IntRes), 
-  sort(SortPos, SortOrder, IntRes, Res).
+  sort(0, SortOrder, IntRes, Res),
+  member(Match, Res).
 
-desc(Match, SortPos, Rules, Res) :- allsorted(Match, SortPos, @>=, Rules, Res).
-asc(Match, SortPos, Rules, Res) :- allsorted(Match, SortPos, @=<, Rules, Res).
-best(Match, SortPos, Rules, Res) :- desc(Match, SortPos, Rules, [Res | _]).
-worst(Match, SortPos, Rules, Res) :- asc(Match, SortPos, Rules, [Res | _]).
+desc(Match, Rules) :- allsorted(Match, @>=, Rules).
+asc(Match, Rules) :- allsorted(Match, @=<, Rules).
+best(Match, Rules) :- desc(Match, Rules), !.
+worst(Match, Rules) :- asc(Match, Rules), !.
