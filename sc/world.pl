@@ -3,6 +3,8 @@
 dangerous(jumptown).
 
 safe(D, A) :-
+  (buy(D, _, _) ; sell(D, _, _)),
+  (buy(A, _, _) ; sell(A, _, _)),
   \+ dangerous(D),
   \+ dangerous(A).
 
