@@ -1,5 +1,6 @@
 :- [
   facts,
   world,
+  explorer,
   goals
 ].
