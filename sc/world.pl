@@ -11,12 +11,14 @@ safe(D, A) :-
 buyableCargo(Cost, SCU, MaxUEC, CanBuy) :-
   {
     CanBuy =< SCU * 100,
-    CanBuy =< MaxUEC / Cost
+    CanBuy =< MaxUEC / Cost,
+    Cost >= 0, MaxUEC >= 0, SCU >= 0, CanBuy >= 0
   }.
 
 expectableProfit(Bought, CostBuy, CostSell, Profit) :-
   {
-    Profit = Bought * (CostSell - CostBuy)
+    Profit = Bought * (CostSell - CostBuy),
+    Bought >= 0, CostSell >= 0, CostBuy >= 0
   }.
 
 trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :-
