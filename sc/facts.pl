@@ -1,3 +1,42 @@
+place(portOlisar).
+place(grimHEX).
+place(arcCorpMiningArea157).
+place(bensonMiningOutpost).
+place(deakinsResearchOutpost).
+place(jumptown).
+place(kudreOre).
+place(arcCorpMiningArea141).
+place(bountifulHarvestHydroponics).
+place(shubinMiningFacilitySCD1).
+place(tramMyersMining).
+place(galleteFamilyFarms).
+place(terraMillsHydroFarm).
+place(hickesResearchOutpost).
+place(rRCRUL2).
+place(rRCRUL4).
+place(rRCRUL5).
+place(levski).
+place(lorville).
+place(hDMSEdmond).
+place(hDMSHadley).
+place(hDMSOparei).
+place(hDMSPinewood).
+place(hDMSStanhope).
+place(hDMSThedus).
+place(hDMSAnderson).
+place(hDMSNorgaard).
+place(hDMSBezdek).
+place(hDMSLathan).
+place(hDMSRyder).
+place(hDMSWoodruff).
+place(hDMSHahn).
+place(hDMSPerlman).
+place(rRHURL1).
+place(rRHURL2).
+place(rRHURL3).
+place(rRHURL4).
+place(rRHURL5).
+
 % portOlisar
 buy(portOlisar, medicalSupplies, 17.01).
 buy(portOlisar, waste, 0.005).

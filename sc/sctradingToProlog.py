@@ -21,6 +21,10 @@ for row in csv.reader(iter(sys.stdin.readline, '')):
 
   counter += 1
 
+for place in places:
+  print("place(" + place + ").")
+print("")
+
 for action, v1 in prices.items():
   for place, v2 in v1.items():
     print("% "+place)

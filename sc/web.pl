@@ -8,15 +8,6 @@ server(Port) :-
   http_server(http_dispatch, [ port(Port)]).
 
 :- http_handler('/api/trip', trip_api, []).
-:- json_object tripobj(
-  departure:string,
-  arrival:string,
-  merchandise:string,
-  canbuy:float,
-  scu:float,
-  maxuec:float,
-  profit:float).
-:- json_object ltripobj(res:[tripobj/7]).
 
 trip_api(Request) :-
   http_parameters(
@@ -28,14 +19,12 @@ trip_api(Request) :-
       arrival(Arrival, [optional(true), atom]),
       merchandise(Merchandise, [optional(true), atom]),
       profit(Profit, [optional(true), float]),
-      canbuy(CanBuy, [optional(true), integer])
+      canbuy(CanBuy, [optional(true), integer]),
+      safety(Safe, [optional(true), atom])
     ]),
 
-  mostProfitableTrip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
-  atom_string(Departure, SDeparture),
-  atom_string(Arrival, SArrival),
-  atom_string(Merchandise, SMerchandise),
-  %prolog_to_json(tripobj(SDeparture, SArrival, SMerchandise, CanBuy, SCU, MaxUEC, Profit), JSONOut),
-  prolog_to_json(ltripobj([tripobj("test", "test", "test", 5.0, 4.0, 100.0, 23.0)]), JSONOut),
-  %prolog_to_json(circle(coord(3.4, 5.6)), JSONOut),
-  reply_json(JSONOut).
+  findall(
+    r{departure:Departure, arrival:Arrival, merchandise:Merchandise, canbuy:CanBuy, scu:SCU, maxuec:MaxUEC, profit:Profit, safety:Safe},
+    mostProfitableTrip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit, Safe),
+    Answers),
+  reply_json(r{answers: Answers}).

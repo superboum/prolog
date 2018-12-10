@@ -2,11 +2,12 @@
 
 dangerous(jumptown).
 
-safe(D, A) :-
-  (buy(D, _, _) ; sell(D, _, _)),
-  (buy(A, _, _) ; sell(A, _, _)),
-  \+ dangerous(D),
-  \+ dangerous(A).
+safe(Place, dangerous) :- place(Place), dangerous(Place).
+safe(Place, safe) :- place(Place), \+ dangerous(Place).
+
+safety(safe, safe, safe).
+safety(_, dangerous, dangerous).
+safety(dangerous, _, dangerous).
 
 buyableCargo(Cost, SCU, MaxUEC, CanBuy) :-
   {
