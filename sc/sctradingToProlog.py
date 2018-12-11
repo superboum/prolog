@@ -4,6 +4,7 @@ def slug(x): return re.sub('\W+', '', x[0].lower() + x[1:].replace(" ", ""))
 
 counter = 0
 places = []
+merchandises = []
 prices = {"buy": {}, "sell": {}}
 for row in csv.reader(iter(sys.stdin.readline, '')):
   if counter == 0:
@@ -12,6 +13,7 @@ for row in csv.reader(iter(sys.stdin.readline, '')):
     pass
   else:
     good = slug(row[0])
+    merchandises.append(good)
     rpri = row[1:]
     for idx in range(len(rpri)):
       place = places[math.floor(idx / 2)]
@@ -20,6 +22,10 @@ for row in csv.reader(iter(sys.stdin.readline, '')):
       prices[action][place][good] = float(rpri[idx].replace(",", ".")) if len(rpri[idx]) > 0 else 0
 
   counter += 1
+
+for merchandise in merchandises:
+  print("merchandise(" + merchandise + ").")
+print("")
 
 for place in places:
   print("place(" + place + ").")

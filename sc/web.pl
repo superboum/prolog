@@ -7,6 +7,12 @@
 server(Port) :-
   http_server(http_dispatch, [ port(Port)]).
 
+:- http_handler('/api/object', object_api, []).
+object_api(_) :-
+  findall(Place, place(Place), Places),
+  findall(Merchandise, merchandise(Merchandise), Merchandises),
+  reply_json(r{place:Places, merchandise:Merchandises}).
+
 :- http_handler('/api/trip', trip_api, []).
 
 trip_api(Request) :-
