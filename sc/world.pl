@@ -30,13 +30,13 @@ trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :-
   expectableProfit(CanBuy, CostBuy, CostSell, Profit).
 
 journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
-  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit).
+  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit), maximize(Profit), maximize(CanBuy).
 
 journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter) :-
-  {NextMaxUEC = MaxUEC + Profit, NextMaxUEC >= 0, MaxUEC >= 0, Profit >= 0},
   OldCounter #= Counter - 1,
-  Next = [(Arrival, _, _, _, SCU, NextMaxUEC, _) | _],
+  Next = [(Arrival, _, _, _, SCU, MaxUEC, _) | _],
   journey(Next, OldCounter),
+  maximize(Profit),
   trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
   \+ member((Departure, Arrival, _, _, _, _, _), Next).
   
