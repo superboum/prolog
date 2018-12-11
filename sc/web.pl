@@ -2,13 +2,17 @@
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_parameters)).
 :- use_module(library(http/http_json)).
+:- use_module(library(http/http_cors)).
 :- use_module(library(http/json_convert)).
+
+:- set_setting(http:cors, [*]).
 
 server(Port) :-
   http_server(http_dispatch, [ port(Port)]).
 
 :- http_handler('/api/object', object_api, []).
 object_api(_) :-
+  cors_enable,
   findall(Place, place(Place), Places),
   findall(Merchandise, merchandise(Merchandise), Merchandises),
   reply_json(r{place:Places, merchandise:Merchandises}).
@@ -28,6 +32,7 @@ trip_api(Request) :-
       canbuy(CanBuy, [optional(true), integer]),
       safety(Safe, [optional(true), atom])
     ]),
+  cors_enable,
 
   findall(
     r{departure:Departure, arrival:Arrival, merchandise:Merchandise, canbuy:CanBuy, scu:SCU, maxuec:MaxUEC, profit:Profit, safety:Safe},
