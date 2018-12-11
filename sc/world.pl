@@ -29,21 +29,18 @@ trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :-
   buyableCargo(CostBuy, SCU, MaxUEC, CanBuy),
   expectableProfit(CanBuy, CostBuy, CostSell, Profit).
 
-twoWayTrip(Departure, Arrival, Merchandise1, Merchandise2, CanBuy1, CanBuy2, SCU, MaxUEC, Profit1, Profit2, FinalProfit) :-
-  trip(Departure, Arrival, Merchandise1, CanBuy1, SCU, MaxUEC, Profit1),
-  trip(Arrival, Departure, Merchandise2, CanBuy2, SCU, MaxUEC + Profit1, Profit2),
-  {
-    FinalProfit = Profit1 + Profit2
-  }.
-
 journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
   trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit).
 
-journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Prev], Counter) :-
-  Prev = [(Arrival, _, _, _, SCU, MaxUEC, _) | _],
+journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter) :-
+  {NextMaxUEC = MaxUEC + Profit, NextMaxUEC >= 0, MaxUEC >= 0, Profit >= 0},
   OldCounter #= Counter - 1,
-  journey(Prev, OldCounter),
+  Next = [(Arrival, _, _, _, SCU, NextMaxUEC, _) | _],
+  journey(Next, OldCounter),
   trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
-  \+ member((Departure, Arrival, _, _, _, _, _), Prev).
+  \+ member((Departure, Arrival, _, _, _, _, _), Next).
   
+circle_journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter) :-
+  journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter),
+  last(Next, (_, Departure, _, _, _, _, _)).
 
