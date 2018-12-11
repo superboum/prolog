@@ -22,14 +22,7 @@ swipl -s vivinasse.prolog -g "gen." -t halt.
 
 ## SC
 
-*WIP*
-
-Generate sctrading.pl:
-
-```
-cd sc
-python3 sctradingToProlog.py < sctrading.csv > facts.pl
-```
+### Deployment
 
 Run an interpreter:
 
@@ -48,4 +41,13 @@ Do some queries:
 
 ```
 mostProfitableTrip(Departure, Arrival, Merchandise, CanBuy, 4, 5000, Profit, Safe).
+```
+
+### Regenerate facts after updating `raw-info.csv`
+
+Generate facts.pl:
+
+```
+cd sc
+python3 sctradingToProlog.py < sctrading.csv > facts.pl
 ```
