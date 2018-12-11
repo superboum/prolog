@@ -1,4 +1,5 @@
 :- use_module(library(clpr)).
+:- use_module(library(clpfd)).
 
 dangerous(jumptown).
 
@@ -34,3 +35,15 @@ twoWayTrip(Departure, Arrival, Merchandise1, Merchandise2, CanBuy1, CanBuy2, SCU
   {
     FinalProfit = Profit1 + Profit2
   }.
+
+journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
+  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit).
+
+journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Prev], Counter) :-
+  Prev = [(Arrival, _, _, _, SCU, MaxUEC, _) | _],
+  OldCounter #= Counter - 1,
+  journey(Prev, OldCounter),
+  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
+  \+ member((Departure, Arrival, _, _, _, _, _), Prev).
+  
+
