@@ -43,7 +43,11 @@ tripProfit(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :-
       maximize(CanBuy)
     )).
 
-% use distinct to select only trips that are the most profitable for each D, A couples.
+% 1. use distinct to select only trips that are the most profitable for each D, A couples.
+% 2. Try to replace atoms by strings
+% 3. First create circle journeys with place(X) only.
+% 4. Then add the (buy, sell) dependency, maybe with a cut to restrict possibilities.
+% 5. Then map the merchandise and its quantity to buy for every hops.
 
 journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
   trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit), maximize(Profit).
