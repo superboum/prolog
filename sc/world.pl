@@ -29,17 +29,34 @@ trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :-
   buyableCargo(CostBuy, SCU, MaxUEC, CanBuy),
   expectableProfit(CanBuy, CostBuy, CostSell, Profit).
 
-journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
-  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit).
+tripSafety(Departure, Arrival, Safe) :-
+  safe(Departure, Safe1),
+  safe(Arrival, Safe2),
+  safety(Safe1, Safe2, Safe).
 
-journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter) :-
-  OldCounter #= Counter - 1,
+tripProfit(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) :- 
+  desc(
+    (Profit, Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC),
+    (
+      trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
+      maximize(Profit),
+      maximize(CanBuy)
+    )).
+
+% use distinct to select only trips that are the most profitable for each D, A couples.
+
+journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit)], 0) :-
+  trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit), maximize(Profit).
+
+journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Hops) :-
+  OldCounter #= Hops - 1,
+  Hops #> 0,
   Next = [(Arrival, _, _, _, SCU, MaxUEC, _) | _],
   journey(Next, OldCounter),
   trip(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit),
-  \+ member((Departure, Arrival, _, _, _, _, _), Next).
+  \+ member((Departure, _, _, _, _, _, _), Next),
+  \+ member((_, Arrival, _, _, _, _, _), Next).
   
-circle_journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter) :-
-  journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Counter),
+circle_journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Hops) :-
+  journey([(Departure, Arrival, Merchandise, CanBuy, SCU, MaxUEC, Profit) | Next], Hops),
   last(Next, (_, Departure, _, _, _, _, _)).
-
